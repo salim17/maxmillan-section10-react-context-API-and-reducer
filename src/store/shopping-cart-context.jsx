@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 import { DUMMY_PRODUCTS } from "../dummy-products.js";
 
 // createContext method returns a React component, hence casing is not camelCase.
@@ -9,7 +9,20 @@ export const CartContext = createContext({
   updateItemQuantity: () => {},
 });
 
+// state is the guaranteed latest state given by React just as previousState in the setSomeState method of useState.
+function shoppingCartReducer(state, action) {
+  return state;
+}
+
 export default function CartContextProvider({ children }) {
+  // this shoppingCartReducer pointer to the function shoppingCartReducer will be executed whenever you dispatch
+  // 2nd argument is the initial state ... which will be used since this state is never been updated yet
+  const [shoppingCartState, shoppingCartDispatch] = useReducer(
+    shoppingCartReducer,
+    {
+      items: [],
+    }
+  );
   const [shoppingCart, setShoppingCart] = useState({
     items: [],
   });
@@ -72,7 +85,7 @@ export default function CartContextProvider({ children }) {
   console.log("app component");
 
   let cartCtx = {
-    items: shoppingCart.items,
+    items: shoppingCartState.items,
     addItemToCart: handleAddItemToCart,
     updateItemQuantity: handleUpdateCartItemQuantity,
   };
