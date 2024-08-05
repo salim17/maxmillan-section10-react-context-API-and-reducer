@@ -1,15 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import CartModal from "./CartModal.jsx";
-import { TestContext } from "../store/shopping-cart-context.jsx";
-import Test from "./Test.jsx";
 
-export default function Header({
-  cart,
-  onUpdateCartItemQuantity,
-  testStateValue,
-  updateTestStateValue,
-}) {
+export default function Header({ cart, onUpdateCartItemQuantity }) {
   const modal = useRef();
 
   const cartQuantity = cart.items.length;
@@ -17,11 +10,6 @@ export default function Header({
   function handleOpenCartClick() {
     modal.current.open();
   }
-
-  // const [test, setTest] = useState(1);
-  // function handleUpdateTestValue() {
-  //   setTest(Math.random());
-  // }
 
   let modalActions = <button>Close</button>;
 
@@ -54,12 +42,6 @@ export default function Header({
           <button onClick={handleOpenCartClick}>Cart ({cartQuantity})</button>
         </p>
       </header>
-      <TestContext.Provider value={{ testing: testStateValue }}>
-        <Test
-          testValue={testStateValue}
-          updateTheValue={updateTestStateValue}
-        />
-      </TestContext.Provider>
     </>
   );
 }

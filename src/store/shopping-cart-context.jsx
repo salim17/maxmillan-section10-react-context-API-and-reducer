@@ -6,8 +6,3 @@ export const CartContext = createContext({
   items: [],
   addItemToCart: () => {},
 });
-
-export const TestContext = createContext({
-  testing1: 9,
-  testing2: 8
-});

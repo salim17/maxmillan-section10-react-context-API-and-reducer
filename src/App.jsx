@@ -4,8 +4,7 @@ import Header from "./components/Header.jsx";
 import Shop from "./components/Shop.jsx";
 import { DUMMY_PRODUCTS } from "./dummy-products.js";
 import Product from "./components/Product.jsx";
-import { CartContext, TestContext } from "./store/shopping-cart-context.jsx";
-import Test from "./components/Test.jsx";
+import { CartContext } from "./store/shopping-cart-context.jsx";
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState({
@@ -67,46 +66,28 @@ function App() {
       };
     });
   }
+  console.log("app component");
 
   let cartCtx = {
     items: shoppingCart.items,
     addItemToCart: handleAddItemToCart,
   };
 
-  console.log("app component");
-
-  const [test, setTest] = useState(1);
-  function handleUpdateTestValue() {
-    setTest(Math.random());
-  }
-
   return (
     // this value prop is the actual connection to state.
-    <>
-      <CartContext.Provider value={cartCtx}>
-        <Header
-          cart={shoppingCart}
-          onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-          testStateValue={test}
-          updateTestStateValue={handleUpdateTestValue}
-        />
-        <Shop>
-          {DUMMY_PRODUCTS.map((product) => (
-            <li key={product.id}>
-              <Product {...product} />
-            </li>
-          ))}
-        </Shop>
-      </CartContext.Provider>
-      {/* A component is re-executed when the value for the context key changes, the values of these context key are generally
-       any state value, here it is test state, so here the value of the testing key changes from inside of the test component, so 
-       this would trigger the execution of this component so the APP component and all the child components. 
-       There is a similar code, inside the Header component initializing the context there and then changing the context key would 
-       only trigger the execution the of the Header component and its child components */}
-      <TestContext.Provider value={{ testing: test }}>
-        <Test testValue={test} updateTheValue={handleUpdateTestValue} />
-      </TestContext.Provider>
-    </>
+    <CartContext.Provider value={cartCtx}>
+      <Header
+        cart={shoppingCart}
+        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
+      />
+      <Shop>
+        {DUMMY_PRODUCTS.map((product) => (
+          <li key={product.id}>
+            <Product {...product} />
+          </li>
+        ))}
+      </Shop>
+    </CartContext.Provider>
   );
 }
 
