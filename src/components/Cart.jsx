@@ -1,14 +1,14 @@
 import { CartContext } from "../store/shopping-cart-context";
 import { useContext } from "react";
 
-export default function Cart({ onUpdateItemQuantity }) {
+export default function Cart() {
   // const cartCtx = useContext(CartContext);
   // destructing
 
   // any component consuming context .. if the value the context value which is used by the component changes those 
   // components function will re-run (re-render). in this case if value of items is changed from anywhere in the app, 
   //this Cart component  will re-render and its child components offcourse
-  const { items } = useContext(CartContext);
+  const { items, updateItemQuantity} = useContext(CartContext);
 
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -33,11 +33,11 @@ export default function Cart({ onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  <button onClick={() => updateItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  <button onClick={() => updateItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>
